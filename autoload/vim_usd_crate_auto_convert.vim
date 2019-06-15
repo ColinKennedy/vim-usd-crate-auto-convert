@@ -10,7 +10,7 @@ function! s:is_usd_file_binary()
 endfunction
 
 
-function! s:compress(path)
+function! vim_usd_crate_auto_convert#compress(path)
     if get(b:, 'is_usd_file_binary') == 0
         return
     endif
@@ -74,7 +74,7 @@ function! s:set_buffer_binary()
 endfunction
 
 
-function! s:initialize(path)
+function! vim_usd_crate_auto_convert#initialize(path)
     call s:set_buffer_binary()
 
     if get(b:, 'is_usd_file_binary') == 0
@@ -85,13 +85,3 @@ function! s:initialize(path)
     call s:uncompress(a:path)
     set nobin
 endfunction
-
-
-augroup usdconvert
-    autocmd!
-    autocmd BufReadPost,FileReadPost *.usd,*.usdc call s:initialize(expand('<afile>'))
-    autocmd BufWritePost,FileWritePost *.usd,*.usdc call s:compress(expand('<afile>'))
-
-    autocmd FileAppendPre *.usd,*.usdc call s:initialize(expand('<afile>'))
-    autocmd FileAppendPost *.usd,*.usdc call s:compress(expand('<afile>'))
-augroup END
