@@ -1,20 +1,32 @@
-" A file that converts USD crate files into ASCII files
-" Reference `:help gzip-example`
+" A file that converts USD crate files into ASCII files for editting.
+"
+" Reference:
+"     `:help gzip-example`
+"
 
 
 " It looks as though USD crate files always begin with "PXR-USDC". So
-" we're search for this string whenever we load a .usd file
+" we search for this string whenever we load a .usd file. If it exists,
+" then it must be a crate file. This is the fastest method of detecting
+" a crate file (that I know of).
 "
 function! s:is_usd_file_binary()
     return getline(1) =~ 'PXR-USDC'
 endfunction
 
 
+" Tell Vim that the current buffer was originally a binary file and to
+" make sure that it converts an ASCII text into USD's crate format any
+" time the user saves.
+"
 function! s:set_buffer_binary()
     let b:is_usd_file_binary = s:is_usd_file_binary()
 endfunction
 
 
+" Create a temporary file, convert it to ASCII, replace the current buffer's
+" contents with the ASCII text, and then delete the temporary file
+"
 function! s:uncompress(path)
     let l:temporary = s:make_temporary(a:path)
 
@@ -32,6 +44,9 @@ function! s:uncompress(path)
 endfunction
 
 
+" Rename the given *.usd / *.usdc file into something that we will use
+" as a temporary file.
+"
 function! s:make_temporary(path)
     let l:root = fnamemodify(a:path, ':p:h')
     let l:name = fnamemodify(a:path, ':t')
@@ -46,6 +61,7 @@ function! s:make_temporary(path)
 endfunction
 
 
+" If the given `path` was originally a binary file then convert it back to binary.
 function! vim_usd_crate_auto_convert#compress(path)
     if get(b:, 'is_usd_file_binary') == 0
         return
@@ -74,6 +90,9 @@ function! vim_usd_crate_auto_convert#compress(path)
 endfunction
 
 
+" Check if the given `path` is a USD binary crate file. If so, convert
+" it to ASCII and load its contents into the current buffer.
+"
 function! vim_usd_crate_auto_convert#initialize(path)
     call s:set_buffer_binary()
 
