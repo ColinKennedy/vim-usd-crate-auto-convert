@@ -1,5 +1,5 @@
 " A file that converts USD crate files into ASCII files
-" Reference :help gzip-example
+" Reference `:help gzip-example`
 
 
 " It looks as though USD crate files always begin with "PXR-USDC". So
@@ -10,31 +10,8 @@ function! s:is_usd_file_binary()
 endfunction
 
 
-function! vim_usd_crate_auto_convert#compress(path)
-    if get(b:, 'is_usd_file_binary') == 0
-        return
-    endif
-
-    let l:temporary = a:path
-
-    if l:temporary =~ '.usdc$'
-        let l:temporary = s:make_temporary(a:path)
-        silent! execute ':!cp ' . a:path . ' "' . l:temporary . '"'
-    endif
-
-    " If `a:path` ends in ".usd" then we must add "--usdFormat usdc" to let
-    " USD know to use its crate representation
-    "
-    let l:command = '!usdcat ' . l:temporary . ' -o ' . a:path
-    if a:path =~ '.usd$'
-        let l:command .= ' --usdFormat usdc'
-    endif
-
-    silent! execute l:command
-
-    if l:temporary != a:path
-        call delete(l:temporary)
-    endif
+function! s:set_buffer_binary()
+    let b:is_usd_file_binary = s:is_usd_file_binary()
 endfunction
 
 
@@ -69,8 +46,31 @@ function! s:make_temporary(path)
 endfunction
 
 
-function! s:set_buffer_binary()
-    let b:is_usd_file_binary = s:is_usd_file_binary()
+function! vim_usd_crate_auto_convert#compress(path)
+    if get(b:, 'is_usd_file_binary') == 0
+        return
+    endif
+
+    let l:temporary = a:path
+
+    if l:temporary =~ '.usdc$'
+        let l:temporary = s:make_temporary(a:path)
+        silent! execute ':!cp ' . a:path . ' "' . l:temporary . '"'
+    endif
+
+    " If `a:path` ends in ".usd" then we must add "--usdFormat usdc" to let
+    " USD know to use its crate representation
+    "
+    let l:command = '!usdcat ' . l:temporary . ' -o ' . a:path
+    if a:path =~ '.usd$'
+        let l:command .= ' --usdFormat usdc'
+    endif
+
+    silent! execute l:command
+
+    if l:temporary != a:path
+        call delete(l:temporary)
+    endif
 endfunction
 
 
