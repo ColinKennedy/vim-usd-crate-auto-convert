@@ -31,6 +31,12 @@ from binary.
 
 ## Options
 
+If you want to use your own command for usdcat, consider adding this line to your .vimrc
+
+```vim
+let g:usdcat_command = 'something'
+```
+
 |     Variable     |                                 Description                                 | Default  |
 |------------------|-----------------------------------------------------------------------------|----------|
 | g:usdcat_command | The executable that will be used to convert to and from USD crate (binary)  | "usdcat" |
