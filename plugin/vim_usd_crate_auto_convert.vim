@@ -2,6 +2,8 @@ if get(g:, 'vim_usd_crate_auto_convert', 0) == 1
     finish
 endif
 
+let g:usdcat_command = get(g:, 'usdcat_command', 'usdcat')
+
 
 " Set-up commands that will run whenever a USD file is loaded. These
 " commands handle the crate-to-ASCII-and-back conversions for you.

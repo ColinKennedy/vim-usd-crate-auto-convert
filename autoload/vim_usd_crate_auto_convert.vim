@@ -33,7 +33,7 @@ function! s:uncompress(path)
     " If `a:path` ends in ".usd" then we must add "--usdFormat usda" to let
     " USD know to use its ASCII representation
     "
-    let l:command = ":'[,']!usdcat " . a:path . ' -o ' . l:temporary
+    let l:command = ":'[,']!" . g:usdcat_command . " " . a:path . ' -o ' . l:temporary
     if l:temporary =~ '.usd$'
         let l:command .= ' --usdFormat usda'
     endif
@@ -77,7 +77,7 @@ function! vim_usd_crate_auto_convert#compress(path)
     " If `a:path` ends in ".usd" then we must add "--usdFormat usdc" to let
     " USD know to use its crate representation
     "
-    let l:command = '!usdcat ' . l:temporary . ' -o ' . a:path
+    let l:command = '!' . g:usdcat_command . ' ' . l:temporary . ' -o ' . a:path
     if a:path =~ '.usd$'
         let l:command .= ' --usdFormat usdc'
     endif

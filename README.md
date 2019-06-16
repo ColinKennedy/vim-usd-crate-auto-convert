@@ -28,3 +28,9 @@ Plugin 'ColinKennedy/vim-usd-crate-auto-convert'
 - `usdcat` (or another equivalent executable) command must be available
 in your PATH environment variable. `usdcat` is used to convert to and
 from binary.
+
+## Options
+
+|     Variable     |                                 Description                                 | Default  |
+|------------------|-----------------------------------------------------------------------------|----------|
+| g:usdcat_command | The executable that will be used to convert to and from USD crate (binary)  | "usdcat" |
