@@ -5,12 +5,6 @@ endif
 let g:usdcat_command = get(g:, 'usdcat_command', 'usdcat')
 
 
-if !executable(g:usdcat_command)
-    echoerr 'Got command "' . g:usdcat_command . '" but this command is not executable. vim-usd-crate-auto-convert cannot be loaded.'
-    finish
-endif
-
-
 " Set-up commands that will run whenever a USD file is loaded. These
 " commands handle the crate-to-ASCII-and-back conversions for you.
 "
