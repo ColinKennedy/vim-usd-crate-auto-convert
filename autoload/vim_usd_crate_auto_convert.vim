@@ -48,10 +48,9 @@ endfunction
 " as a temporary file.
 "
 function! s:make_temporary(path)
-    let l:root = fnamemodify(a:path, ':p:h')
+    let l:root = tempname()
     let l:name = fnamemodify(a:path, ':t')
-    let l:temporary_name = 'tmp_' . l:name
-    let l:temporary = l:root . '/' . l:temporary_name
+    let l:temporary = l:root . '_tmp_' . l:name
 
     if l:temporary =~ '.usdc'
         let l:temporary .= '.usd'
