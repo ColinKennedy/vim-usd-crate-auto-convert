@@ -28,19 +28,7 @@ endfunction
 " contents with the ASCII text, and then delete the temporary file
 "
 function! s:uncompress(path)
-    let l:temporary = s:make_temporary(a:path)
-
-    " If `a:path` ends in ".usd" then we must add "--usdFormat usda" to let
-    " USD know to use its ASCII representation
-    "
-    let l:command = ":'[,']!" . g:usdcat_command . " " . a:path . ' -o ' . l:temporary
-    if l:temporary =~ '.usd$'
-        let l:command .= ' --usdFormat usda'
-    endif
-
-    silent! execute l:command
-        \ ' && cat ' . l:temporary
-        \ ' && rm ' . l:temporary
+    silent! execute ":'[,']!" . g:usdcat_command . " " . a:path
 endfunction
 
 
